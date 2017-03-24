@@ -15,7 +15,17 @@ class ReadArticlesTest extends TestCase
     function a_user_can_view_all_articles()
     {
         $article = factory('App\Article')->create();
+
         $this->get('/articles')
+            ->assertSee($article->title);
+    }
+
+    /** @test */
+    function a_user_can_view_a_single_article()
+    {
+        $article = factory('App\Article')->create();
+
+        $this->get("/articles/{$article->slug}")
             ->assertSee($article->title);
     }
 }
