@@ -7,11 +7,15 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ArticlesTest extends TestCase
+class ReadArticlesTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /** @test */
-    function function_name()
+    function a_user_can_view_all_articles()
     {
-        
+        $article = factory('App\Article')->create();
+        $this->get('/articles')
+            ->assertSee($article->title);
     }
 }
