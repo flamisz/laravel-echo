@@ -20,6 +20,16 @@
         </div>
     </div>
 
+    @if (auth()->check())
+        @include('comments.create')
+    @else
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                Please <a href="{{ route('login') }}">login</a> to create comment.
+            </div>
+        </div>
+    @endif
+
     @foreach ($article->comments as $comment)
         @include('comments.show')
     @endforeach

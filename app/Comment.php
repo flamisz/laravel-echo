@@ -13,7 +13,7 @@ class Comment extends Model
         return $this->belongsTo('App\Article');
     }
 
-    public function owner()
+    public function creator()
     {
         return $this->belongsTo('App\User', 'user_id');
     }

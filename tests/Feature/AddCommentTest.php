@@ -30,4 +30,17 @@ class AddCommentTest extends TestCase
         $this->get("/articles/{$article->slug}")
              ->assertSee($comment->body);
     }
+
+    /** @test */
+    public function a_guest_user_can_not_create_comment()
+    {
+        $article = factory(Article::class)->create();
+
+        $comment = factory(Comment::class)->make([
+            'article_id' => $article->id
+        ]);
+
+        $this->post('/comments', $comment->toArray())
+             ->assertRedirect('/login');
+    }
 }
