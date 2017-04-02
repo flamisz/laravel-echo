@@ -13,5 +13,15 @@
                 </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h3>Comments</h3>
+        </div>
+    </div>
+
+    @foreach ($article->comments as $comment)
+        @include('comments.show')
+    @endforeach
 </div>
 @endsection

@@ -1,0 +1,33 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Article;
+use App\Comment;
+use App\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Tests\TestCase;
+
+class AddCommentTest extends TestCase
+{
+    use DatabaseMigrations;
+
+    /** @test */
+    public function a_logged_in_user_can_create_comment()
+    {
+        $user = factory(User::class)->create();
+        $article = factory(Article::class)->create();
+
+        $comment = factory(Comment::class)->make([
+            'article_id' => $article->id
+        ]);
+
+        $this->actingAs($user);
+        $this->post('/comments', $comment->toArray());
+
+        $this->get("/articles/{$article->slug}")
+             ->assertSee($comment->body);
+    }
+}

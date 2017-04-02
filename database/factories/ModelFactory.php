@@ -23,41 +23,29 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->state(App\User::class, 'admin', function (Faker\Generator $faker) {
+    return [
+        'is_admin' => true
+    ];
+});
+
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
     $title = $faker->sentence;
     return [
         'title' => $title,
         'slug' => str_slug($title),
-        'body' => $faker->text
+        'body' => $faker->text(1000)
     ];
 });
 
-$factory->define(App\Video::class, function (Faker\Generator $faker) {
-    $title = $faker->sentence;
+$factory->define(App\Comment::class, function (Faker\Generator $faker) {
     return [
-        'title' => $title,
-        'slug' => str_slug($title),
-        'embed_code' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/lC-auAlsoUw" frameborder="0" allowfullscreen></iframe>'
-    ];
-});
-
-$factory->define(App\PhotoCollection::class, function (Faker\Generator $faker) {
-    $title = $faker->sentence;
-    return [
-        'title' => $title,
-        'slug' => str_slug($title)
-    ];
-});
-
-$factory->define(App\Photo::class, function (Faker\Generator $faker) {
-    $title = $faker->sentence;
-    return [
-        'photo_collection_id' => function () {
-            return factory('App\PhotoCollection')->create()->id;
+        'user_id' => function () {
+            return factory('App\User')->create()->id;
         },
-        'title' => $title,
-        'slug' => str_slug($title),
-        'description' => $faker->text,
-        'file_name' => '300.png'
+        'article_id' => function () {
+            return factory('App\Article')->create()->id;
+        },
+        'body' => $faker->paragraph
     ];
 });
