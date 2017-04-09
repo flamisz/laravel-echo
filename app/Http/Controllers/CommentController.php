@@ -21,6 +21,8 @@ class CommentController extends Controller
 
     public function index(Article $article)
     {
-        return $article->comments;
+        return $article->load(['comments' => function ($query) {
+            $query->with('creator')->orderBy('created_at', 'desc');
+        }]);
     }
 }

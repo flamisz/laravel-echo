@@ -6,7 +6,10 @@
         </div>
     </div>
 
-    <comment v-for="comment in comments">{{ comment.body }}</comment>
+    <comment v-for="comment in comments">
+        <span slot="header">{{ comment.creator.name }} said {{ comment.created_at }}</span>
+        {{ comment.body }}
+    </comment>
     </div>
 </template>
 
@@ -24,7 +27,7 @@
             console.log('Comments mounted.');
 
             axios.get('/articles/' + this.article + '/comments')
-                 .then(response => this.comments = response.data);
+                 .then(response => this.comments = response.data.comments);
         }
     }
 </script>
