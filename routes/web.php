@@ -27,3 +27,4 @@ Route::get('/articles', 'ArticleController@index');
 Route::get('/articles/{article}', 'ArticleController@show');
 
 Route::post('comments', 'CommentController@store')->middleware('auth');
+Route::get('/articles/{article}/comments', 'CommentController@index');

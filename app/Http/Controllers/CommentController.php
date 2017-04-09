@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
 use App\Comment;
 use Illuminate\Http\Request;
 
@@ -16,5 +17,10 @@ class CommentController extends Controller
         ]);
         
         return redirect("/articles/{$comment->article->slug}");
+    }
+
+    public function index(Article $article)
+    {
+        return $article->comments;
     }
 }
