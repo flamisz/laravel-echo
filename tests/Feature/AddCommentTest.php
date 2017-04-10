@@ -27,6 +27,10 @@ class AddCommentTest extends TestCase
         $this->actingAs($user);
         $this->post('/comments', $comment->toArray());
 
+        $this->assertDatabaseHas('comments', [
+            'body' => $comment->body
+        ]);
+
         $this->get("/articles/{$article->slug}")
              ->assertSee($comment->body);
     }
@@ -42,5 +46,9 @@ class AddCommentTest extends TestCase
 
         $this->post('/comments', $comment->toArray())
              ->assertRedirect('/login');
+
+        $this->assertDatabaseMissing('comments', [
+            'body' => $comment->body
+        ]);
     }
 }
