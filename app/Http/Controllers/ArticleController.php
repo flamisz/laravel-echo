@@ -16,10 +16,6 @@ class ArticleController extends Controller
 
     public function show(Article $article)
     {
-        // $article->load('comments.creator');
-        $article->load(['comments' => function ($query) {
-            $query->with('creator')->orderBy('created_at', 'desc');
-        }]);
         return view('articles.show', compact('article'));
     }
 }

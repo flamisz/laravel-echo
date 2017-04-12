@@ -13,7 +13,7 @@
                 </div>
         </div>
     </div>
-<comment-list article="{{ $article->slug }}"></comment-list>
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <h3>Comments</h3>
@@ -30,8 +30,6 @@
         </div>
     @endif
 
-    @foreach ($article->comments as $comment)
-        @include('comments.show')
-    @endforeach
+    <comment-list article="{{ $article->slug }}"></comment-list>
 </div>
 @endsection

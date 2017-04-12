@@ -12158,6 +12158,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['article'],
@@ -12174,7 +12179,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log('Comments mounted.');
 
         axios.get('/articles/' + this.article + '/comments').then(function (response) {
-            return _this.comments = response.data.comments;
+            return _this.comments = response.data;
         });
     }
 });
@@ -31838,7 +31843,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [_vm._m(0), _vm._v(" "), _vm._l((_vm.comments), function(comment) {
     return _c('comment', [_c('span', {
       slot: "header"
-    }, [_vm._v(_vm._s(comment.creator.name) + " said " + _vm._s(comment.created_at))]), _vm._v("\n    " + _vm._s(comment.body) + "\n")])
+    }, [_vm._v("\n        " + _vm._s(comment.creator.name) + " said \n        "), _c('time', {
+      attrs: {
+        "datetime": comment.created_at
+      }
+    }, [_vm._v("\n            " + _vm._s(comment.formatted_created_at) + "\n        ")])]), _vm._v("\n    " + _vm._s(comment.body) + "\n")])
   })], 2)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {

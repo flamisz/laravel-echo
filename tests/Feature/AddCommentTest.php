@@ -25,10 +25,14 @@ class AddCommentTest extends TestCase
         ]);
 
         $this->actingAs($user);
-        $this->post('/comments', $comment->toArray());
+        $this->post('/comments', [
+            'article_id' => $article->id,
+            'body' => $comment->body
+        ]);
 
-        $this->get("/articles/{$article->slug}")
-             ->assertSee($comment->body);
+        $this->assertDatabaseHas('comments', [
+            'body' => $comment->body
+        ]);
     }
 
     /** @test */
@@ -40,7 +44,9 @@ class AddCommentTest extends TestCase
             'article_id' => $article->id
         ]);
 
-        $this->post('/comments', $comment->toArray())
-             ->assertRedirect('/login');
+        $this->post('/comments', [
+            'article_id' => $article->id,
+            'body' => $comment->body
+        ])->assertRedirect('/login');
     }
 }

@@ -1,15 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Browser;
 
 use App\Article;
 use App\Comment;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Tests\TestCase;
+use Tests\DuskTestCase;
 
-class ReadCommentsTest extends TestCase
+class ReadCommentsTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
@@ -22,7 +20,10 @@ class ReadCommentsTest extends TestCase
             'article_id' => $article->id
         ]);
 
-        $this->get("/articles/{$article->slug}")
-             ->assertSee($comment->body);
+        $this->browse(function ($browser) use ($comment, $article) {
+            $browser->visit("/articles/{$article->slug}")
+                    ->waitUntil('app.__vue__._isMounted')
+                    ->assertSee($comment->body);
+        });
     }
 }
