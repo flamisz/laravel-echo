@@ -48,6 +48,7 @@ class CreateCommentTest extends DuskTestCase
                     ->type('body', 'This is my comment')
                     ->press('Publish')
                     ->assertPathIs("/articles/{$article->slug}")
+                    ->waitUntil('app.__vue__._isMounted')
                     ->assertSee('This is my comment');
         });
     }
