@@ -6,7 +6,7 @@
         </div>
     </div>
 
-    <comment v-for="comment in comments">
+    <comment v-for="comment in comments" :now="now">
         <span slot="header">
             {{ comment.creator.name }} said 
             <time :datetime="comment.created_at">
@@ -24,12 +24,19 @@
 
         data: function () {
             return {
-                comments: []
+                comments: [],
+                now: Date.now()
             }
         },
 
         mounted() {
             console.log('Comments mounted.');
+
+            var self = this;
+            setInterval(function () {
+                console.log('updating ticker')
+                self.$data.now = Date.now()
+            }, 1000)
 
             axios.get('/articles/' + this.article + '/comments')
                  .then(response => this.comments = response.data);
