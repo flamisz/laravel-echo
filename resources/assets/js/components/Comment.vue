@@ -2,13 +2,18 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
+
                     <div class="panel-heading">
-                        <slot name="header"></slot>
+                        {{ comment.creator.name }} said 
+                        <time :datetime="comment.created_at">
+                            {{ diffForHumans }}
+                        </time>
                     </div>
 
                     <div class="panel-body">
-                        <slot></slot>
+                        {{ comment.body }}
                     </div>
+
                 </div>
         </div>
     </div>
@@ -16,8 +21,16 @@
 
 <script>
     export default {
+        props: ['now', 'comment'],
+
         mounted() {
             console.log('Comment mounted.')
+        },
+
+        computed: {
+            diffForHumans: function () {
+                return moment(this.comment.created_at).from(this.now)
+            }
         }
     }
 </script>

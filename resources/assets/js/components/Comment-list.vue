@@ -6,16 +6,7 @@
         </div>
     </div>
 
-    <comment v-for="comment in comments">
-        <span slot="header">
-            {{ comment.creator.name }} said 
-            <time :datetime="comment.created_at">
-                {{ comment.formatted_created_at }}, 
-                {{ diffForHumans }}
-            </time>
-        </span>
-        {{ comment.body }}
-    </comment>
+    <comment v-for="comment in comments" :now="now" :comment="comment"></comment>
     </div>
 </template>
 
@@ -25,7 +16,8 @@
 
         data: function () {
             return {
-                comments: []
+                comments: [],
+                now: Date.now()
             }
         },
 
@@ -37,13 +29,7 @@
 
             window.setInterval(() => {
                 this.now = (new Date()).getTime();
-            },1000);
-        },
-
-        computed: {
-            diffForHumans: function () {
-                return moment('2017-04-20 22:00:00').from(this.now)
-            }
+            },1000*60);
         }
     }
 </script>
