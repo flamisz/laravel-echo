@@ -10,7 +10,8 @@
         <span slot="header">
             {{ comment.creator.name }} said 
             <time :datetime="comment.created_at">
-                {{ comment.formatted_created_at }}
+                {{ comment.formatted_created_at }}, 
+                {{ diffForHumans }}
             </time>
         </span>
         {{ comment.body }}
@@ -33,6 +34,16 @@
 
             axios.get('/articles/' + this.article + '/comments')
                  .then(response => this.comments = response.data);
+
+            window.setInterval(() => {
+                this.now = (new Date()).getTime();
+            },1000);
+        },
+
+        computed: {
+            diffForHumans: function () {
+                return moment('2017-04-20 22:00:00').from(this.now)
+            }
         }
     }
 </script>
