@@ -15,6 +15,9 @@ require('./bootstrap');
 
 Vue.component('comment-list', require('./components/Comment-list.vue'));
 Vue.component('comment', require('./components/Comment.vue'));
+Vue.component('comment-form', require('./components/Comment-form.vue'));
+
+window.Event = new Vue();
 
 const app = new Vue({
     el: '#app'

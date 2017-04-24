@@ -23,10 +23,6 @@
     export default {
         props: ['now', 'comment'],
 
-        mounted() {
-            console.log('Comment mounted.')
-        },
-
         computed: {
             diffForHumans: function () {
                 return moment(this.comment.created_at).from(this.now)

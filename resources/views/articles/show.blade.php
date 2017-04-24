@@ -21,7 +21,7 @@
     </div>
 
     @if (auth()->check())
-        @include('comments.create')
+        <comment-form article-id="{{ $article->id }}"></comment-form>
     @else
         <div class="row">
             <div class="col-md-8 col-md-offset-2">

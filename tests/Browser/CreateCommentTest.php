@@ -47,9 +47,42 @@ class CreateCommentTest extends DuskTestCase
                     ->visit("/articles/{$article->slug}")
                     ->type('body', 'This is my comment')
                     ->press('Publish')
-                    ->assertPathIs("/articles/{$article->slug}")
-                    ->waitUntil('app.__vue__._isMounted')
                     ->assertSee('This is my comment');
+        });
+    }
+
+    /** @test */
+    public function submit_create_comment_without_body_shows_error()
+    {
+        $user = factory(User::class)->create();
+        $article = factory(Article::class)->create();
+
+        $this->browse(function ($browser) use ($article, $user) {
+            $browser->loginAs($user)
+                    ->visit("/articles/{$article->slug}")
+                    ->press('Publish')
+                    ->waitForText('required')
+                    ->assertSee('required');
+        });
+    }
+
+    
+    public function a_user_can_view_if_somebody_write_a_comment()
+    {
+        $userWriter = factory(User::class)->create();
+        $userReader = factory(User::class)->create();
+        $article = factory(Article::class)->create();
+
+        $this->browse(function ($first, $second) use ($article, $userWriter, $userReader) {
+            $first->loginAs($userReader)
+                   ->visit("/articles/{$article->slug}")
+                   ->waitForText('This is my comment')
+                   ->assertSee($userWriter->name);
+
+            $second->loginAs($userWriter)
+                    ->visit("/articles/{$article->slug}")
+                    ->type('body', 'This is my comment')
+                    ->press('Publish');
         });
     }
 }

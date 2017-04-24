@@ -17,7 +17,8 @@ class Comment extends Model
 
     public function creator()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User', 'user_id')
+                    ->select(['id', 'name']);
     }
 
     public function getFormattedCreatedAtAttribute()
