@@ -27758,14 +27758,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             body: '',
             bodyError: '',
-            success: false
+            success: false,
+            disableButton: false
         };
+    },
+
+    computed: {
+        submitDisabled: function submitDisabled() {
+            return !!this.bodyError || this.disableButton;
+        }
     },
 
     methods: {
         onSubmit: function onSubmit() {
             var _this = this;
 
+            this.disableButton = true;
             axios.post('/comments', {
                 body: this.body,
                 article_id: this.articleId
@@ -27773,9 +27781,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 Event.$emit('comment-was-submitted', response.data);
                 _this.success = true;
                 _this.body = '';
+                _this.disableButton = false;
             }).catch(function (error) {
                 _this.bodyError = error.response.data.body[0];
                 _this.success = false;
+                _this.disableButton = false;
             });
         },
         clearBodyError: function clearBodyError() {
@@ -47821,7 +47831,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn btn-primary",
     attrs: {
       "type": "submit",
-      "disabled": !!_vm.bodyError
+      "disabled": _vm.submitDisabled
     }
   }, [_vm._v("Publish")])])])])])])])
 },staticRenderFns: []}

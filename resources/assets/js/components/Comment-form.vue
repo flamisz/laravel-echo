@@ -14,7 +14,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary" :disabled="!!bodyError">Publish</button>
+                            <button type="submit" class="btn btn-primary" :disabled="submitDisabled">Publish</button>
                         </div>
                     </form>
 
@@ -32,12 +32,20 @@
             return {
                 body: '',
                 bodyError: '',
-                success: false
+                success: false,
+                disableButton: false
+            }
+        },
+
+        computed: {
+            submitDisabled: function () {
+                return (!!this.bodyError || this.disableButton)
             }
         },
 
         methods: {
             onSubmit() {
+                this.disableButton = true;
                 axios.post('/comments', {
                     body: this.body,
                     article_id: this.articleId
@@ -45,11 +53,13 @@
                 .then(response => {
                     Event.$emit('comment-was-submitted', response.data);
                     this.success = true;
-                    this.body = ''
+                    this.body = '';
+                    this.disableButton = false
                 })
                 .catch(error => {
                     this.bodyError = error.response.data.body[0];
-                    this.success = false
+                    this.success = false;
+                    this.disableButton = false
                 });
             },
 
