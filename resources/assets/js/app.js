@@ -16,8 +16,12 @@ require('./bootstrap');
 Vue.component('comment-list', require('./components/Comment-list.vue'));
 Vue.component('comment', require('./components/Comment.vue'));
 Vue.component('comment-form', require('./components/Comment-form.vue'));
+Vue.component('flash', require('./components/Flash.vue'));
 
 window.Event = new Vue();
+window.flash = function (message) {
+    Event.$emit('flash', message);
+};
 
 const app = new Vue({
     el: '#app'

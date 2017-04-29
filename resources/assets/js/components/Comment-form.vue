@@ -6,10 +6,9 @@
 
                 <div class="panel-body">
                     <form @submit.prevent="onSubmit">
-                        <div class="form-group" :class="{ 'has-error': bodyError, 'has-success': success }">
+                        <div class="form-group" :class="{ 'has-error': bodyError }">
                             <label for="body">Comment:</label>
                             <input type="text" class="form-control" id="body" name="body" v-model="body" @keydown="clearBodyError">
-                            <span class="help-block" v-if="success">Comment added!</span>
                             <span class="help-block" v-if="bodyError" v-text="bodyError"></span>
                         </div>
 
@@ -32,7 +31,6 @@
             return {
                 body: '',
                 bodyError: '',
-                success: false,
                 disableButton: false
             }
         },
@@ -52,20 +50,18 @@
                 })
                 .then(response => {
                     Event.$emit('comment-was-submitted', response.data);
-                    this.success = true;
                     this.body = '';
-                    this.disableButton = false
+                    this.disableButton = false;
+                    flash('Comment added!');
                 })
                 .catch(error => {
                     this.bodyError = error.response.data.body[0];
-                    this.success = false;
                     this.disableButton = false
                 });
             },
 
             clearBodyError() {
                 this.bodyError = '';
-                this.success = false
             }
         }
     }
