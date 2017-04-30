@@ -35,7 +35,7 @@
 
             Echo.channel('comment.' + this.article)
                 .listen('CommentCreated', (e) => {
-                    console.log(e.comment.body);
+                    flash('New comment on page.')
                 });
         }
     }

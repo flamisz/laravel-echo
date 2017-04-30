@@ -27840,7 +27840,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
 
         Echo.channel('comment.' + this.article).listen('CommentCreated', function (e) {
-            console.log(e.comment.body);
+            flash('New comment on page.');
         });
     }
 });

@@ -22,7 +22,7 @@ class CommentController extends Controller
             'body' => request('body')
         ]);
 
-        event(new CommentCreated($comment));
+        broadcast(new CommentCreated($comment))->toOthers();
         
         return $comment->load('creator');
     }
