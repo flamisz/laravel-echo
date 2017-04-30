@@ -31,7 +31,12 @@
 
             Event.$on('comment-was-submitted', comment => {
                 this.comments.unshift(comment);
-            })
+            });
+
+            Echo.channel('comment.' + this.article)
+                .listen('CommentCreated', (e) => {
+                    console.log(e.comment.body);
+                });
         }
     }
 </script>

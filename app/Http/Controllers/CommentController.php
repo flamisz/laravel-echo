@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Comment;
+use App\Events\CommentCreated;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -20,6 +21,8 @@ class CommentController extends Controller
             'article_id' => request('article_id'),
             'body' => request('body')
         ]);
+
+        event(new CommentCreated($comment));
         
         return $comment->load('creator');
     }
