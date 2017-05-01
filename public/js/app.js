@@ -27813,6 +27813,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['article'],
@@ -27820,8 +27824,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             comments: [],
-            now: Date.now()
+            now: Date.now(),
+            newComments: []
         };
+    },
+
+    computed: {
+        hasNewComment: function hasNewComment() {
+            return !!this.newComments.length;
+        },
+        newCommentMessage: function newCommentMessage() {
+            return this.newComments.length + ' new';
+        }
     },
 
     mounted: function mounted() {
@@ -27841,7 +27855,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         Echo.channel('comment.' + this.article).listen('CommentCreated', function (e) {
             flash('New comment on page.');
+            e.comment.creator = e.creator;
+            _this.newComments.unshift(e.comment);
         });
+    },
+
+
+    methods: {
+        loadNewComments: function loadNewComments() {
+            this.comments = this.newComments.concat(this.comments);
+            this.newComments = [];
+        }
     }
 });
 
@@ -52947,7 +52971,19 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_vm._m(0), _vm._v(" "), _vm._l((_vm.comments), function(comment) {
+  return _c('div', [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-8 col-md-offset-2"
+  }, [_c('h3', [_vm._v("Vue Comments\n                "), (_vm.hasNewComment) ? _c('span', {
+    staticClass: "label label-info",
+    staticStyle: {
+      "cursor": "pointer"
+    },
+    on: {
+      "click": _vm.loadNewComments
+    }
+  }, [_vm._v("\n                    " + _vm._s(_vm.newCommentMessage) + "\n                ")]) : _vm._e()])])]), _vm._v(" "), _vm._l((_vm.comments), function(comment) {
     return _c('comment', {
       attrs: {
         "now": _vm.now,
@@ -52955,13 +52991,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     })
   })], 2)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8 col-md-offset-2"
-  }, [_c('h3', [_vm._v("Vue Comments")])])])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

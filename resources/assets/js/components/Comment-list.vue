@@ -2,7 +2,11 @@
     <div>
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h3>Vue Comments</h3>
+                <h3>Vue Comments
+                    <span v-if="hasNewComment" @click="loadNewComments" class="label label-info" style="cursor:pointer">
+                        {{ newCommentMessage }}
+                    </span>
+                </h3>
             </div>
         </div>
 
@@ -17,7 +21,17 @@
         data: function () {
             return {
                 comments: [],
-                now: Date.now()
+                now: Date.now(),
+                newComments: []
+            }
+        },
+
+        computed: {
+            hasNewComment: function () {
+                return (!!this.newComments.length)
+            },
+            newCommentMessage: function () {
+                return this.newComments.length + ' new' 
             }
         },
 
@@ -35,8 +49,17 @@
 
             Echo.channel('comment.' + this.article)
                 .listen('CommentCreated', (e) => {
-                    flash('New comment on page.')
+                    flash('New comment on page.');
+                    e.comment.creator = e.creator;
+                    this.newComments.unshift(e.comment);
                 });
+        },
+
+        methods: {
+            loadNewComments() {
+                this.comments = this.newComments.concat(this.comments);
+                this.newComments = [];
+            }
         }
     }
 </script>
