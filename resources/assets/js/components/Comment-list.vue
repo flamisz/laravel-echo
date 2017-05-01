@@ -10,7 +10,9 @@
             </div>
         </div>
 
-        <comment v-for="comment in comments" :now="now" :comment="comment"></comment>
+        <transition-group name="list">
+            <comment v-for="comment in comments" :now="now" :comment="comment" :key="comment.id"></comment>
+        </transition-group>
     </div>
 </template>
 
@@ -63,3 +65,15 @@
         }
     }
 </script>
+<style>
+    .list-move {
+        transition: all 1s ease;
+    }
+    .list-enter-active {
+        transition: all 1s ease;
+    }
+    .list-enter {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+</style>

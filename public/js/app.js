@@ -27817,6 +27817,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['article'],
@@ -52758,6 +52760,10 @@ module.exports = Component.exports
 /* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(181)
+
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(149),
@@ -52983,14 +52989,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.loadNewComments
     }
-  }, [_vm._v("\n                    " + _vm._s(_vm.newCommentMessage) + "\n                ")]) : _vm._e()])])]), _vm._v(" "), _vm._l((_vm.comments), function(comment) {
+  }, [_vm._v("\n                    " + _vm._s(_vm.newCommentMessage) + "\n                ")]) : _vm._e()])])]), _vm._v(" "), _c('transition-group', {
+    attrs: {
+      "name": "list"
+    }
+  }, _vm._l((_vm.comments), function(comment) {
     return _c('comment', {
+      key: comment.id,
       attrs: {
         "now": _vm.now,
         "comment": comment
       }
     })
-  })], 2)
+  }))], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -62641,6 +62652,46 @@ module.exports = Vue$3;
 __webpack_require__(128);
 module.exports = __webpack_require__(129);
 
+
+/***/ }),
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(155)();
+exports.push([module.i, "\n.list-move {\n    -webkit-transition: all 1s ease;\n    transition: all 1s ease;\n}\n.list-enter-active {\n    -webkit-transition: all 1s ease;\n    transition: all 1s ease;\n}\n.list-enter {\n    opacity: 0;\n    -webkit-transform: translateY(-30px);\n            transform: translateY(-30px);\n}\n", ""]);
+
+/***/ }),
+/* 181 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(180);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(169)("795a2c12", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-51a12759!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Comment-list.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-51a12759!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Comment-list.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);
