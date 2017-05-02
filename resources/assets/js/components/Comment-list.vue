@@ -52,7 +52,6 @@
             Echo.channel('comment.' + this.article)
                 .listen('CommentCreated', (e) => {
                     flash('New comment on page.');
-                    e.comment.creator = e.creator;
                     this.newComments.unshift(e.comment);
                 });
         },

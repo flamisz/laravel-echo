@@ -16,7 +16,7 @@ class CommentCreated implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $comment;
-    public $creator;
+
     /**
      * Create a new event instance.
      *
@@ -25,7 +25,13 @@ class CommentCreated implements ShouldBroadcast
     public function __construct(Comment $comment)
     {
         $this->comment = $comment;
-        $this->creator = $comment->creator;
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'comment' => $this->comment->load('creator')
+        ];  
     }
 
     /**

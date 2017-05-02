@@ -27857,7 +27857,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         Echo.channel('comment.' + this.article).listen('CommentCreated', function (e) {
             flash('New comment on page.');
-            e.comment.creator = e.creator;
             _this.newComments.unshift(e.comment);
         });
     },
